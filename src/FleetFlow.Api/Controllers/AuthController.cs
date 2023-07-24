@@ -1,12 +1,11 @@
-﻿using FleetFlow.Service.DTOs.Login;
-using FleetFlow.Service.Interfaces;
+﻿using FleetFlow.Api.Models;
+using FleetFlow.Service.DTOs.Login;
+using FleetFlow.Service.Interfaces.Users;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FleetFlow.Api.Controllers
 {
-    [ApiController]
-    [Route("api/[controller]")]
-    public class AuthController : Controller
+    public class AuthController : RestfulSense
     {
         private readonly IAuthService authService;
 
@@ -14,10 +13,17 @@ namespace FleetFlow.Api.Controllers
         {
             this.authService = authService;
         }
+
         [HttpPost("authenticate")]
         public async Task<IActionResult> AuthenticateAsync(LoginDto dto)
         {
-            return Ok(await this.authService.AuthenticateAsync(dto.Email, dto.Password));
+            return Ok(new Response
+            {
+                Code = 200,
+                Message = "Success",
+                Data = await this.authService.AuthenticateAsync(dto.Email, dto.Password)
+            });
         }
+
     }
 }

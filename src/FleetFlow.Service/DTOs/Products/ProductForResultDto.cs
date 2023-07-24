@@ -1,4 +1,7 @@
-﻿using FleetFlow.Domain.Entities;
+﻿using FleetFlow.Domain.Entities.Orders;
+using FleetFlow.Domain.Entities.Products;
+using FleetFlow.Domain.Entities.Warehouses;
+using System.Text.Json.Serialization;
 
 namespace FleetFlow.Service.DTOs.Product;
 
@@ -12,6 +15,9 @@ public class ProductForResultDto
     public long CategoryId { get; set; }
     public ProductCategory Category { get; set; }
 
+    [JsonIgnore]
     public ICollection<Inventory> Inventories { get; set; }
+
+    [JsonIgnore]
     public ICollection<OrderItem> OrderItems { get; set; }
 }

@@ -1,11 +1,9 @@
-﻿using FleetFlow.Service.Interfaces;
+﻿using FleetFlow.Service.Interfaces.Users;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FleetFlow.Api.Controllers
 {
-    [ApiController]
-    [Route("api/[controller]")]
-    public class EmailController : ControllerBase
+    public class EmailController : RestfulSense
     {
         private readonly IEmailService emailService;
         public EmailController(IEmailService emailService)

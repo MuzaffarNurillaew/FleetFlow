@@ -362,6 +362,13 @@ MigrationBackup/
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
 
-# EF Core Database migrations
-*/Migrations
+
+
+
 /src/FleetFlow.Api/appsettings.json
+/src/FleetFlow.DAL/Migrations/
+/src/FleetFlow.Api/appsettings.Development.json
+/src/FleetFlow.Api/wwwroot/Files
+/src/FleetFlow.GraphQL/appsettings.json
+/src/FleetFlow.GraphQL/appsettings.Development.json
+/src/FleetFlow.GraphQL/appsettings.Development.json

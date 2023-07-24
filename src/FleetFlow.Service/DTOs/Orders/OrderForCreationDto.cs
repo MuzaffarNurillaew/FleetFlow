@@ -1,16 +1,11 @@
-﻿using FleetFlow.Domain.Entities;
-using FleetFlow.Domain.Enums;
-using FleetFlow.Service.DTOs.Address;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using FleetFlow.Domain.Enums;
 
-namespace FleetFlow.Service.DTOs.Orders
+namespace FleetFlow.Service.DTOs.Orders;
+
+public class OrderForCreationDto
 {
-    public class OrderForCreationDto
-    {
-        public AddressForCreationDto AddressDto { get; set; }
-    }
+    public long RegionId { get; set; }
+    public long DistrictId { get; set; }
+    public long AddressId { get; set; }
+    public PaymentType PaymentType { get; set; }
 }

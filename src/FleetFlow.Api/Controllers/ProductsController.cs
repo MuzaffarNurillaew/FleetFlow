@@ -1,20 +1,15 @@
-﻿using FleetFlow.Domain.Congirations;
-using FleetFlow.Domain.Entities;
+﻿using FleetFlow.Api.Models;
+using FleetFlow.Domain.Congirations;
+using FleetFlow.Domain.Entities.Products;
 using FleetFlow.Service.DTOs.Product;
-using FleetFlow.Service.Interfaces;
-using FleetFlow.Service.Services;
-using Microsoft.AspNetCore.Authorization;
+using FleetFlow.Service.Interfaces.Products;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FleetFlow.Api.Controllers
 {
-    [ApiController, Authorize]
-    [Route("api/[controller]")]
-    public class ProductsController : ControllerBase
+    public class ProductsController : RestfulSense
     {
         private readonly IProductService productService;
-
-        public int FromQuery { get; private set; }
 
         public ProductsController(IProductService productService)
         {
@@ -25,9 +20,14 @@ namespace FleetFlow.Api.Controllers
         /// Get all products
         /// </summary>
         /// <returns></returns>
-        [HttpGet, AllowAnonymous]
+        [HttpGet]
         public async ValueTask<IActionResult> GetAllAsync([FromQuery] PaginationParams @params)
-            => Ok(await productService.RetrieveAllAsync(@params));
+            => Ok(new Response
+            {
+                Code = 200,
+                Message = "OK",
+                Data = await productService.RetrieveAllAsync(@params)
+            });
 
 
         /// <summary>
@@ -35,10 +35,15 @@ namespace FleetFlow.Api.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        [HttpGet("id"), AllowAnonymous]
-        public async ValueTask<IActionResult> GetByIdAsync(long id)
+        [HttpGet("id")]
+        public async ValueTask<IActionResult> GetAsync(long id)
         {
-            return Ok(await productService.RetrieveByIdAsync(id));
+            return Ok(new Response
+            {
+                Code = 200,
+                Message = "OK",
+                Data = await productService.RetrieveByIdAsync(id)
+            });
         }
 
         /// <summary>
@@ -46,9 +51,14 @@ namespace FleetFlow.Api.Controllers
         /// </summary>
         /// <param name="dto"></param>
         /// <returns></returns>
-        [HttpPost, Authorize(Roles = "Admin,Merchant")]
+        [HttpPost]
         public async ValueTask<IActionResult> PostAsync([FromBody] ProductForCreationDto dto)
-            => Ok(await this.productService.AddAsync(dto));
+            => Ok(new Response
+            {
+                Code = 200,
+                Message = "OK",
+                Data = await this.productService.AddAsync(dto)
+            });
 
         /// <summary>
         /// Update product
@@ -58,10 +68,12 @@ namespace FleetFlow.Api.Controllers
         /// <returns></returns>
         [HttpPut("id")]
         public async ValueTask<ActionResult<Product>> PutAsync(long id, [FromBody] ProductForCreationDto dto)
-        {
-            var product = await productService.ModifyAsync(id, dto);
-            return Ok(product);
-        }
+            => Ok(new Response
+            {
+                Code = 200,
+                Message = "OK",
+                Data = await productService.ModifyAsync(id, dto)
+            });
 
         /// <summary>
         /// Delete user by id
@@ -70,6 +82,11 @@ namespace FleetFlow.Api.Controllers
         /// <returns></returns>
         [HttpDelete("id")]
         public async ValueTask<ActionResult<bool>> DeleteAsync(long id)
-            => Ok(await productService.RemoveAsync(id));
+            => Ok(new Response
+            {
+                Code = 200,
+                Message = "OK",
+                Data = await productService.RemoveAsync(id)
+            });
     }
 }

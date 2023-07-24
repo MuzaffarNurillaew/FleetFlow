@@ -65,6 +65,12 @@ namespace FleetFlow.DAL.Repositories
             return entry.Entity;
         }
 
+        public async ValueTask<bool> InsertAsync(IEnumerable<TEntity> entity)
+        {
+            await this.dbSet.AddRangeAsync(entity);
+            return true;
+        }
+
         /// <summary>
         /// Saves tracking changes and write them to database permenantly
         /// </summary>
@@ -99,7 +105,7 @@ namespace FleetFlow.DAL.Repositories
         /// <param name="expression"></param>
         /// <returns></returns>
         public async ValueTask<TEntity> SelectAsync(Expression<Func<TEntity, bool>> expression, string[] includes = null)
-            => await this.SelectAll(expression, includes).FirstOrDefaultAsync();
+            => await this.SelectAll(expression, includes).FirstOrDefaultAsync(t => !t.IsDeleted);
 
         /// <summary>
         /// Updates entity and keep track of it until change saved

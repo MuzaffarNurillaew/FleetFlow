@@ -1,6 +1,5 @@
 using FleetFlow.Api.Models;
 using FleetFlow.Service.Exceptions;
-using Serilog;
 
 namespace FleetFlow.Api.Middlewares
 {
@@ -21,23 +20,23 @@ namespace FleetFlow.Api.Middlewares
             {
                 await next(context);
             }
-            catch(FleetFlowException exception)
+            catch (FleetFlowException exception)
             {
                 context.Response.StatusCode = exception.Code;
                 await context.Response.WriteAsJsonAsync(new Response
                 {
                     Code = exception.Code,
-                    Error = exception.Message
+                    Message = exception.Message
                 });
             }
-            catch(Exception exception)
+            catch (Exception exception)
             {
                 this.logger.LogError($"{exception}\n\n");
                 context.Response.StatusCode = 500;
                 await context.Response.WriteAsJsonAsync(new Response
                 {
-                   Code = 500,
-                   Error = exception.Message 
+                    Code = 500,
+                    Message = exception.Message
                 });
             }
         }
