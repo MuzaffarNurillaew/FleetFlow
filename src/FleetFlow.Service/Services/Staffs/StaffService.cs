@@ -116,7 +116,6 @@ namespace FleetFlow.Service.Services.Staffs
             if (entity is null || entity.IsDeleted == true)
                 throw new FleetFlowException(404, "Staff not found");
             return this.mapper.Map<StaffForResultDto>(entity);
-
         }
     }
 }

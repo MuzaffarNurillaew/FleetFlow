@@ -46,7 +46,7 @@ builder.Services.AddControllersWithViews()
 var app = builder.Build();
 
 // Updates db in early startup based on latest migration
-app.ApplyMigrations();
+// app.ApplyMigrations();
 app.InitAccessor();
 
 // Getting wwwroot path
