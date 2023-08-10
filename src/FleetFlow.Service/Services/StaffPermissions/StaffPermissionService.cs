@@ -34,14 +34,19 @@ namespace FleetFlow.Service.Services.StaffPermissions
         {
             var entity = await repository.SelectAsync(x => x.StaffId == dto.StaffId &&
                 x.PermissionId == dto.PermissionId);
+            
             if (entity is not null && entity.IsDeleted == true)
                 throw new FleetFlowException(403, "Already exist");
+            
             if (await staffService.RetrieveByIdAsync(dto.StaffId) is null)
                 throw new FleetFlowException(404, "Staff not found");
+            
             if (await permissionService.RetrieveByIdAsync(dto.PermissionId) is null)
                 throw new FleetFlowException(404, "Permission not found");
+            
             var model = mapper.Map<StaffPermission>(dto);
             await repository.InsertAsync(model);
+            
             return mapper.Map<StaffPermissionForResultDto>(dto);
         }
 
